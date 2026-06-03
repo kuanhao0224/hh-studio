@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H.H studio｜到府貓咪寫真・手繪時光禮盒</title>
+    <style>
+        /* 手機版本極簡風格設計基調 */
+        :root {
+            --bg-color: #fbf9f6;
+            --text-main: #2c2c2c;
+            --text-muted: #666666;
+            --accent-warm: #a67c65;
+            --accent-warm-light: #f3ede7;
+            --accent-green: #6e8270;
+            --accent-green-light: #edf2ee;
+            --border-color: #e5dfd8;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "PingFang TC", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent; /* 移除手機端點擊高亮藍框 */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* 導覽列 - 手機版優化置中 */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(251, 249, 246, 0.98);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--text-main);
+        }
+
+        .logo span {
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--accent-warm);
+            margin-left: 6px;
+            border-left: 1px solid var(--border-color);
+            padding-left: 6px;
+        }
+
+        /* 主視覺區 Hero Section */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 100px 20px 40px 20px;
+            background: linear-gradient(to bottom, #f5efe6 0%, var(--bg-color) 100%);
+        }
+
+        .hero-badge {
+            background-color: var(--accent-green-light);
+            color: var(--accent-green);
+            font-size: 13px;
+            padding: 5px 16px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .hero h1 {
+            font-size: 28px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 15px;
+            color: var(--text-muted);
+            max-width: 100%;
+            margin-bottom: 35px;
+            letter-spacing: 0.5px;
+            padding: 0 10px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--accent-warm);
+            color: var(--white);
+            padding: 12px 40px;
+            border-radius: 4px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(166, 124, 101, 0.15);
+        }
+
+        /* 區塊通用設定 */
+        .section {
+            padding: 50px 20px;
+            max-width: 100%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-header h2 {
+            font-size: 22px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: "";
+            display: block;
+            width: 30px;
+            height: 1.5px;
+            background-color: var(--accent-warm);
+            margin: 8px auto 0 auto;
+        }
+
+        /* 常態全包方案區 */
+        .package-box {
+            background-color: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .package-banner {
+            background-color: var(--accent-warm-light);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .package-tag {
+            color: var(--accent-warm);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .package-price {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent-warm);
+        }
+
+        .package-body {
+            padding: 24px 20px;
+        }
+
+        .package-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .package-highlights {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .highlight-tag {
+            background-color: #f5f5f5;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: var(--text-main);
+            width: fit-content;
+        }
+
+        .package-details-list {
+            list-style: none;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .package-details-list li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+            text-align: justify;
+        }
+
+        .package-details-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-warm);
+            font-weight: bold;
+        }
+
+        /* 毛小孩手繪加購方案卡片排版 */
+        .art-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .art-card {
+            background-color: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .art-author {
+            font-size: 11px;
+            color: var(--accent-warm);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .art-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .art-price-tag {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--accent-warm);
+        }
+
+        .art-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            text-align: justify;
+            margin-bottom: 12px;
+        }
+
+        .art-meta {
+            font-size: 12px;
+            color: var(--text-main);
+            border-top: 1px dashed var(--border-color);
+            padding-top: 12px;
+        }
+
+        /* 車馬費直列式佈局 */
+        .map-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .map-card {
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 6px;
+            background-color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .map-card h4 {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .map-card p {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* 預約表單 */
+        .booking-section {
+            background-color: #f5efe6;
+            padding: 60px 15px;
+        }
+
+        .form-container {
+            background-color: var(--white);
+            padding: 30px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .form-group label span {
+            color: #d9534f;
+            margin-left: 2px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            border-radius: 4px;
+            font-size: 14px;
+            color: var(--text-main);
+            -webkit-appearance: none;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-warm);
+            background-color: var(--white);
+        }
+
+        textarea.form-control {
+            height: 90px;
+        }
+
+        .option-box {
+            display: block;
+            border: 1px solid var(--border-color);
+            padding: 14px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            background-color: var(--white);
+        }
+
+        .option-box input {
+            margin-right: 8px;
+            transform: scale(1.1);
+        }
+
+        .option-title {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .option-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-left: 22px;
+            line-height: 1.4;
+            margin-top: 4px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: var(--text-main);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-submit:active {
+            background-color: var(--accent-warm);
+        }
+
+        .form-instructions {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 15px;
+            line-height: 1.6;
+        }
+
+        footer {
+            background-color: var(--text-main);
+            color: #999999;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 12px;
+            border-top: 1px solid #333333;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頂部導覽列 -->
+    <nav>
+        <div class="logo">H.H studio<span>到府貓咪寫真</span></div>
+    </nav>
+
+    <!-- 主視覺區 Hero Section -->
+    <section class="hero">
+        <div class="hero-badge">同時幫浪浪買一份溫飽</div>
+        <h1>留下與貓貓的無價回憶</h1>
+        <p>
+            我們是以幫助流浪貓與中途咖啡廳為核心的貓咪寫真<br>
+            寫真的收益會有一部分作為幫助貓咪中途永續經營<br>
+            因為我們深信，每一次定格都是永恆的時光膠囊，也是一份善的永續循環。
+        </p>
+        <a href="#booking" class="btn-primary">線上預約申請</a>
+    </section>
+
+    <!-- 常態全包方案 Section -->
+    <section id="package" class="section" style="background-color: #fdfcfb; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+        <div class="section-header">
+            <h2>常態全包方案</h2>
+        </div>
+        <div class="package-box">
+            <div class="package-banner">
+                <span class="package-tag">全包方案內容</span>
+                <span class="package-price">NT$ 8,999</span>
+            </div>
+            <div class="package-body">
+                <h3 class="package-title">【H.H studio・到府寫真】</h3>
+                <div class="package-highlights">
+                    <div class="highlight-tag">服務時間：2~3小時</div>
+                    <div class="highlight-tag">多貓家庭不加價（免費）</div>
+                    <div class="highlight-tag" style="background-color: var(--accent-green-light); color: var(--accent-green); font-weight: 500;">固定把1000捐贈給中途機構</div>
+                </div>
+                <ul class="package-details-list">
+                    <li>多貓家庭完全不設限：不管家裡有幾位主子，我們通通免費、不加價。</li>
+                    <li>交付豐富檔案：精修風格照片 40 張 ＋ 當天全片風格底片電子檔。</li>
+                    <li>精緻回憶基礎實體組：包含特製手作貓咪實體相框 1 個 ＋ 佳能CP1500相片 3 張。</li>
+                    <li>現場貓掌拓印儀式：提供專屬拓印章與拓印紙，包含現場拓印側拍錄影側拍短片。</li>
+                    <li>安心加碼安全保障：多貓家庭若需追加第二份實體拓印，每隻僅加收 $500。</li>
+                </ul>
+            </div>
+        </div>
+        <p style="font-size: 12px; color: var(--text-muted); text-align: justify; margin: 20px auto 0 auto; line-height: 1.5; padding: 0 10px;">
+            💡 <strong>浪愛永續承諾</strong>：本場拍攝費用中，將有固定的 $1,000 元現金捐贈給合作的流浪貓咪中途之家，用於支持他們的永續經營。
+        </p>
+    </section>
+
+    <!-- 毛小孩手繪加購方案 Section -->
+    <section id="art" class="section">
+        <div class="section-header">
+            <h2>毛小孩手繪加購方案</h2>
+        </div>
+        <div class="art-container">
+            <div class="art-card">
+                <div class="art-author">手繪系列 (交期1週)</div>
+                <h3 class="art-title">初階回憶・手繪明信片</h3>
+                <div class="art-price-tag">加購價 +$1,999</div>
+                <p class="art-desc">一週快速到貨。明信片小尺寸（10*15cm），完美保留純手繪特有的溫暖線條筆觸與毛孩神韻。</p>
+                <div class="art-meta">多貓家庭：預設含1貓。每多一隻主子/人類入鏡另加 <strong>+$300</strong></div>
+            </div>
+            <div class="art-card">
+                <div class="art-info">
+                    <div class="art-author">手繪系列 (交期1週)</div>
+                    <h3 class="art-title">進階桌上・手繪肖像畫</h3>
+                    <div class="art-price-tag">加購價 +$2,999</div>
+                    <p class="art-desc">黃金比例桌上型精緻擺飾（15*20cm），純手工細緻細摹，適合擺放於辦公桌、客廳玄關或床頭櫃。</p>
+                    <div class="art-meta">多貓家庭：預設含1貓。每多一隻主子/人類入鏡另加 <strong>+$600</strong></div>
+                </div>
+            </div>
+            <div class="art-card">
+                <div class="art-info">
+                    <div class="art-author">擬真油畫系列 (交期1個月)</div>
+                    <h3 class="art-title">傳家珍藏・手繪擬真油畫</h3>
+                    <div class="art-price-tag">加購價 +$6,999</div>
+                    <p class="art-desc">大氣客廳壁掛畫5F布面畫布（35*27cm）。專業畫師以厚重高階油彩層層堆疊立體毛髮，永久留存最深邃的眼神靈魂。</p>
+                    <div class="art-meta">多貓家庭：預設含1貓。每多一隻主子/人類入鏡另加 <strong>+$4,800</strong></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 車馬規範 Section -->
+    <section id="travel" class="section" style="border-top: 1px solid var(--border-color);">
+        <div class="section-header">
+            <h2>全包制地區車馬規範</h2>
+        </div>
+        <div class="map-container">
+            <div class="map-card">
+                <h4>雙北都會區 (淡水、台北、新北市區)</h4>
+                <p>免運費</p>
+            </div>
+            <div class="map-card">
+                <h4>桃基地區 (基隆、桃園、新北深山)</h4>
+                <p>+$500</p>
+            </div>
+            <div class="map-card">
+                <h4>竹苗宜地區</h4>
+                <p>+$1,500</p>
+            </div>
+            <div class="map-card">
+                <h4>中台灣地區 (台中、彰化、南投)</h4>
+                <p>+$3,000</p>
+            </div>
+            <div class="map-card">
+                <h4>其他全台所有地區</h4>
+                <p>+$4,500</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 預約表單區 -->
+    <section id="booking" class="booking-section">
+        <div class="section-header">
+            <h2>貓咪寫真預約申請</h2>
+        </div>
+        <div class="form-container">
+            <!-- 已經為您綁定專屬的 Google Forms 提交網址 -->
+            <form action="https://docs.google.com/forms/d/e/1FAIpQLScX1ZDS0a-dKIU7QjuGTheruD5JlkZxlHRG2sX1ZW3xRB6H3w/formResponse" method="POST" target="_hidden_iframe" id="catBookingForm">
+                
+                <!-- 1. 飼主稱呼 / 姓名 -->
+                <div class="form-group">
+                    <label>飼主稱呼 / 姓名<span>*</span></label>
+                    <input type="text" name="entry.1535175668" class="form-control" placeholder="例：林小姐" required>
+                </div>
+
+                <!-- 2. 聯絡管道選擇 -->
+                <div class="form-group">
+                    <label>聯絡管道選擇<span>*</span></label>
+                    <select name="entry.629849893" class="form-control" required>
+                        <option value="Instagram 聯絡">Instagram 聯絡</option>
+                        <option value="Line 聯絡">Line 聯絡</option>
+                    </select>
+                </div>
+
+                <!-- 3. 聯絡資訊 ID -->
+                <div class="form-group">
+                    <label>聯絡資訊 ID<span>*</span></label>
+                    <input type="text" name="entry.1907692021" class="form-control" placeholder="請填寫您的帳號或ID (請開啟陌生訊息)" required>
+                </div>
+
+                <!-- 4. 貓咪基本資訊描述 (已實裝最新代碼) -->
+                <div class="form-group">
+                    <label>貓咪基本資訊描述<span>*</span></label>
+                    <textarea name="entry.598040362" class="form-control" placeholder="例：3歲/銀虎斑/美短/哈尼；2歲/橘色/米克斯/辛巴" required></textarea>
+                </div>
+
+                <!-- 5. 貓咪是否怕生 (已實裝最新代碼，Value精準對齊表單選項) -->
+                <div class="form-group">
+                    <label>貓咪是否怕生 (貓咪個性調查)<span>*</span></label>
+                    <select name="entry.1872494964" class="form-control" required>
+                        <option value="是，面對陌生人比較緊張">是，面對陌生人比較緊張</option>
+                        <option value="否，是不怕生的小天使">否，是不怕生的社交小天使</option>
+                        <option value="其他">其他個性（請於下方備註欄補充）</option>
+                    </select>
+                </div>
+
+                <!-- 6. 是否為認養/中途畢業之貓咪主子？ -->
+                <div class="form-group">
+                    <label>是否為認養/中途畢業之貓咪主子？<span>*</span></label>
+                    <div class="option-box">
+                        <input type="radio" name="entry.1365937585" value="是，我是愛心領養人 ✦ 領養人免費獲得明信片畫作" checked>
+                        <span class="option-title">是，我是愛心領養人 ✦ 領養人免費獲得明信片畫作</span>
+                        <p class="option-desc">致敬愛心：憑認養證明預約本方案，即可直接免費獲得專屬手繪明信片畫作一份！</p>
+                    </div>
+                    <div class="option-box">
+                        <input type="radio" name="entry.1365937585" value="否，一般常態貓家庭">
+                        <span class="option-title">否，一般常態貓家庭</span>
+                        <p class="option-desc">依然享有不計貓數 2~3 小時奢華到府寫真，同樣會捐贈 $1,000 支持流浪貓中途之家！</p>
+                    </div>
+                </div>
+
+                <!-- 7. 毛小孩手繪加購方案意願 (自由複選，Value精準對齊表單選項) -->
+                <div class="form-group">
+                    <label>毛小孩手繪加購方案意願 (自由複選)</label>
+                    <div class="option-box">
+                        <input type="checkbox" name="entry.1270357405" value="加購 A：【手繪】初階明信片 (+$1,999 / 領養人免費獲得)">
+                        <span class="option-title">加購 A：【手繪】初階明信片 (+$1,999 / 領養人免費獲得)</span>
+                    </div>
+                    <div class="option-box">
+                        <input type="checkbox" name="entry.1270357405" value="加購 B：【手繪】進階桌上肖像畫 (+$2,999)">
+                        <span class="option-title">加購 B：【手繪】進階桌上肖像畫 (+$2,999)</span>
+                    </div>
+                    <div class="option-box">
+                        <input type="checkbox" name="entry.1270357405" value="加購 C：【油畫】傳家珍藏手繪擬真油畫 (+$6,999，交期1個月)">
+                        <span class="option-title">加購 C：【油畫】傳家珍藏手繪擬真油畫 (+$6,999，交期1個月)</span>
+                    </div>
+                </div>
+
+                <!-- 8. 服務區域車馬選擇 (Value精準對齊表單選項) -->
+                <div class="form-group">
+                    <label>服務區域車馬選擇<span>*</span></label>
+                    <select name="entry.1453730335" class="form-control" required>
+                        <option value="雙北都會區">雙北市區 (台北、新北市區) ➔ 免運費</option>
+                        <option value="桃基及雙北山區">桃基地區及雙北山區 (基隆、桃園、雙北山區) ➔ +$500</option>
+                        <option value="竹苗宜地區">竹苗宜地區 (新竹、苗栗、宜蘭) ➔ +$1,500</option>
+                        <option value="中台灣都會區">中台灣地區 (台中、彰化、南投) ➔ +$3,000</option>
+                        <option value="其他全台所有地區">其他地區 ➔ +$4,500</option>
+                    </select>
+                </div>
+
+                <!-- 9. 環境測光照片 / 其他補充需求 (已實裝最新代碼) -->
+                <div class="form-group">
+                    <label>環境測光照片 / 其他補充需求</label>
+                    <textarea name="entry.1217364157" class="form-control" placeholder="請描述家中的採光環境，或填寫多貓多人群合照、3貓以上大畫布等特殊需求。"></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">送出預約申請</button>
+                <p class="form-instructions">
+                    點擊送出後，表單將寫入後端 Google Forms 數據庫。<br>
+                    我們團隊會一邊擼貓一邊查看您的訊息，將於 5 個工作天內主動與您聯絡，期待見到您們家的寶貝！
+                </p>
+            </form>
+        </div>
+    </section>
+
+    <iframe name="_hidden_iframe" id="_hidden_iframe" style="display:none;" onload="if(typeof formSubmitted !== 'undefined' && formSubmitted) { alert('預約申請已成功送出！我們將盡快與您聯絡。'); document.getElementById('catBookingForm').reset(); }"></iframe>
+
+    <script>
+        var formSubmitted = false;
+        document.getElementById('catBookingForm').addEventListener('submit', function() {
+            formSubmitted = true;
+        });
+    </script>
+
+    <!-- 頁尾 -->
+    <footer>
+        <p>&copy; 2026 H.H studio 到府貓咪寫真工作室. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
