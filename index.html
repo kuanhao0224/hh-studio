@@ -227,7 +227,7 @@
             font-weight: bold;
         }
 
-        /* 毛小孩手繪加購方案卡片排版 */
+        /* 毛小孩手繪加購方案卡片排版 - 框框粗細嚴格一致 */
         .art-container {
             display: flex;
             flex-direction: column;
@@ -422,12 +422,10 @@
 </head>
 <body>
 
-    <!-- 頂部導覽列 -->
     <nav>
         <div class="logo">H.H studio<span>到府貓咪寫真</span></div>
     </nav>
 
-    <!-- 主視覺區 Hero Section -->
     <section class="hero">
         <div class="hero-badge">同時幫浪浪買一份溫飽</div>
         <h1>留下與貓貓的無價回憶</h1>
@@ -439,7 +437,6 @@
         <a href="#booking" class="btn-primary">線上預約申請</a>
     </section>
 
-    <!-- 常態全包方案 Section -->
     <section id="package" class="section" style="background-color: #fdfcfb; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
         <div class="section-header">
             <h2>常態全包方案</h2>
@@ -470,7 +467,6 @@
         </p>
     </section>
 
-    <!-- 毛小孩手繪加購方案 Section -->
     <section id="art" class="section">
         <div class="section-header">
             <h2>毛小孩手繪加購方案</h2>
@@ -489,7 +485,7 @@
                     <h3 class="art-title">進階桌上・手繪肖像畫</h3>
                     <div class="art-price-tag">加購價 +$2,999</div>
                     <p class="art-desc">黃金比例桌上型精緻擺飾（15*20cm），純手工細緻細摹，適合擺放於辦公桌、客廳玄關或床頭櫃。</p>
-                    <div class="art-meta">多貓家庭：預設含1貓。每多一隻主子/人類入鏡另加 <strong>+$600</strong></div>
+                    <div class="art-meta">多貓家庭：預設含1貓. 每多一隻主子/人類入鏡另加 <strong>+$600</strong></div>
                 </div>
             </div>
             <div class="art-card">
@@ -504,7 +500,6 @@
         </div>
     </section>
 
-    <!-- 車馬規範 Section -->
     <section id="travel" class="section" style="border-top: 1px solid var(--border-color);">
         <div class="section-header">
             <h2>全包制地區車馬規範</h2>
@@ -515,7 +510,7 @@
                 <p>免運費</p>
             </div>
             <div class="map-card">
-                <h4>桃基地區 (基隆、桃園、新北深山)</h4>
+                <h4>桃基地區及雙北山區 (基隆、桃園、雙北山區)</h4>
                 <p>+$500</p>
             </div>
             <div class="map-card">
@@ -533,22 +528,18 @@
         </div>
     </section>
 
-    <!-- 預約表單區 -->
     <section id="booking" class="booking-section">
         <div class="section-header">
             <h2>貓咪寫真預約申請</h2>
         </div>
         <div class="form-container">
-            <!-- 已經為您綁定專屬的 Google Forms 提交網址 -->
             <form action="https://docs.google.com/forms/d/e/1FAIpQLScX1ZDS0a-dKIU7QjuGTheruD5JlkZxlHRG2sX1ZW3xRB6H3w/formResponse" method="POST" target="_hidden_iframe" id="catBookingForm">
                 
-                <!-- 1. 飼主稱呼 / 姓名 -->
                 <div class="form-group">
                     <label>飼主稱呼 / 姓名<span>*</span></label>
                     <input type="text" name="entry.1535175668" class="form-control" placeholder="例：林小姐" required>
                 </div>
 
-                <!-- 2. 聯絡管道選擇 -->
                 <div class="form-group">
                     <label>聯絡管道選擇<span>*</span></label>
                     <select name="entry.629849893" class="form-control" required>
@@ -557,19 +548,16 @@
                     </select>
                 </div>
 
-                <!-- 3. 聯絡資訊 ID -->
                 <div class="form-group">
                     <label>聯絡資訊 ID<span>*</span></label>
                     <input type="text" name="entry.1907692021" class="form-control" placeholder="請填寫您的帳號或ID (請開啟陌生訊息)" required>
                 </div>
 
-                <!-- 4. 貓咪基本資訊描述 (已實裝最新代碼) -->
                 <div class="form-group">
                     <label>貓咪基本資訊描述<span>*</span></label>
                     <textarea name="entry.598040362" class="form-control" placeholder="例：3歲/銀虎斑/美短/哈尼；2歲/橘色/米克斯/辛巴" required></textarea>
                 </div>
 
-                <!-- 5. 貓咪是否怕生 (已實裝最新代碼，Value精準對齊表單選項) -->
                 <div class="form-group">
                     <label>貓咪是否怕生 (貓咪個性調查)<span>*</span></label>
                     <select name="entry.1872494964" class="form-control" required>
@@ -579,7 +567,6 @@
                     </select>
                 </div>
 
-                <!-- 6. 是否為認養/中途畢業之貓咪主子？ -->
                 <div class="form-group">
                     <label>是否為認養/中途畢業之貓咪主子？<span>*</span></label>
                     <div class="option-box">
@@ -594,11 +581,10 @@
                     </div>
                 </div>
 
-                <!-- 7. 毛小孩手繪加購方案意願 (自由複選，Value精準對齊表單選項) -->
                 <div class="form-group">
                     <label>毛小孩手繪加購方案意願 (自由複選)</label>
                     <div class="option-box">
-                        <input type="checkbox" name="entry.1270357405" value="加購 A：【手繪】初階明信片 (+$1,999 / 領養人免費獲得)">
+                        <input type="checkbox" name="entry.1270357405" value="加購 A：【手繪】初階明信片 (+ $1,999 / 領養人免費獲得)">
                         <span class="option-title">加購 A：【手繪】初階明信片 (+$1,999 / 領養人免費獲得)</span>
                     </div>
                     <div class="option-box">
@@ -611,19 +597,17 @@
                     </div>
                 </div>
 
-                <!-- 8. 服務區域車馬選擇 (Value精準對齊表單選項) -->
                 <div class="form-group">
                     <label>服務區域車馬選擇<span>*</span></label>
                     <select name="entry.1453730335" class="form-control" required>
                         <option value="雙北都會區">雙北市區 (台北、新北市區) ➔ 免運費</option>
                         <option value="桃基及雙北山區">桃基地區及雙北山區 (基隆、桃園、雙北山區) ➔ +$500</option>
                         <option value="竹苗宜地區">竹苗宜地區 (新竹、苗栗、宜蘭) ➔ +$1,500</option>
-                        <option value="中台灣都會區">中台灣地區 (台中、彰化、南投) ➔ +$3,000</option>
+                        <option value="中台灣地區">中台灣地區 (台中、彰化、南投) ➔ +$3,000</option>
                         <option value="其他全台所有地區">其他地區 ➔ +$4,500</option>
                     </select>
                 </div>
 
-                <!-- 9. 環境測光照片 / 其他補充需求 (已實裝最新代碼) -->
                 <div class="form-group">
                     <label>環境測光照片 / 其他補充需求</label>
                     <textarea name="entry.1217364157" class="form-control" placeholder="請描述家中的採光環境，或填寫多貓多人群合照、3貓以上大畫布等特殊需求。"></textarea>
@@ -647,7 +631,6 @@
         });
     </script>
 
-    <!-- 頁尾 -->
     <footer>
         <p>&copy; 2026 H.H studio 到府貓咪寫真工作室. All Rights Reserved.</p>
     </footer>
