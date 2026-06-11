@@ -4,162 +4,294 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>H.H studio｜到府貓咪寫真・手繪時光禮盒</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* 手機版本極簡風格設計基調 */
+        /* ============================================
+           H.H studio — 溫暖手作感設計系統
+           底色:暖亞麻 / 主色:陶土 / 輔色:苔綠
+        ============================================ */
         :root {
-            --bg-color: #fbf9f6;
-            --text-main: #2c2c2c;
-            --text-muted: #666666;
-            --accent-warm: #a67c65;
-            --accent-warm-light: #f3ede7;
+            --bg-color: #faf6f0;
+            --bg-deep: #f3ebe0;
+            --text-main: #3d322b;
+            --text-muted: #8a7d70;
+            --accent-warm: #b07a5c;
+            --accent-warm-deep: #96603f;
+            --accent-warm-light: #f6ede4;
             --accent-green: #6e8270;
-            --accent-green-light: #edf2ee;
-            --border-color: #e5dfd8;
-            --white: #ffffff;
+            --accent-green-light: #eef3ee;
+            --border-color: #e7ddd0;
+            --white: #fffdfa;
+            --shadow-soft: 0 6px 24px rgba(110, 85, 60, 0.08);
+            --shadow-lift: 0 12px 32px rgba(110, 85, 60, 0.12);
+            --radius: 14px;
+            --serif: "Noto Serif TC", "PingFang TC", serif;
+            --sans: "Noto Sans TC", "PingFang TC", "Helvetica Neue", sans-serif;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: "PingFang TC", "Helvetica Neue", Helvetica, Arial, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            line-height: 1.6;
+            line-height: 1.75;
             font-size: 15px;
+            font-family: var(--sans);
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        a {
-            color: inherit;
-            text-decoration: none;
+        a { color: inherit; text-decoration: none; }
+
+        h1, h2, h3, h4, .logo { font-family: var(--serif); }
+
+        /* ---------- 進場動畫(尊重減少動態偏好) ---------- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(.22,.8,.35,1);
+        }
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .reveal { opacity: 1; transform: none; transition: none; }
+            * { animation: none !important; transition: none !important; }
         }
 
-        /* 導覽列 - 手機版優化置中 */
+        /* ---------- 導覽列 ---------- */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background-color: rgba(251, 249, 246, 0.98);
+            background-color: rgba(250, 246, 240, 0.88);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-color);
             z-index: 1000;
-            padding: 15px 20px;
+            padding: 14px 20px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
         .logo {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 600;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
+        .logo svg { flex-shrink: 0; }
+
         .logo span {
+            font-family: var(--sans);
             font-size: 11px;
             font-weight: 400;
             color: var(--accent-warm);
-            margin-left: 6px;
+            margin-left: 2px;
             border-left: 1px solid var(--border-color);
-            padding-left: 6px;
+            padding-left: 10px;
+            letter-spacing: 3px;
         }
 
-        /* 主視覺區 Hero Section */
+        /* ---------- Hero 主視覺 ---------- */
         .hero {
-            min-height: 85vh;
+            min-height: 92vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 100px 20px 40px 20px;
-            background: linear-gradient(to bottom, #f5efe6 0%, var(--bg-color) 100%);
+            padding: 110px 24px 60px 24px;
+            position: relative;
+            background:
+                radial-gradient(ellipse 90% 55% at 50% -5%, #f0e2cf 0%, rgba(240,226,207,0) 65%),
+                var(--bg-color);
+            overflow: hidden;
+        }
+
+        /* 漂浮腳印 — 細微氛圍動畫 */
+        .paw-float {
+            position: absolute;
+            opacity: 0;
+            animation: pawDrift 14s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .paw-float:nth-child(1) { top: 18%; left: 10%; animation-delay: 0s; }
+        .paw-float:nth-child(2) { top: 30%; right: 8%; animation-delay: 4.5s; }
+        .paw-float:nth-child(3) { bottom: 16%; left: 16%; animation-delay: 9s; }
+        @keyframes pawDrift {
+            0%   { opacity: 0; transform: translateY(12px) rotate(-8deg) scale(.9); }
+            18%  { opacity: .5; }
+            50%  { opacity: .35; transform: translateY(-14px) rotate(6deg) scale(1); }
+            82%  { opacity: 0; transform: translateY(-30px) rotate(10deg) scale(1.02); }
+            100% { opacity: 0; }
+        }
+
+        .hero-cat {
+            margin-bottom: 26px;
+        }
+        .hero-cat svg .tail {
+            transform-origin: 86px 70px;
+            animation: tailSway 5s ease-in-out infinite;
+        }
+        @keyframes tailSway {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(7deg); }
         }
 
         .hero-badge {
             background-color: var(--accent-green-light);
             color: var(--accent-green);
             font-size: 13px;
-            padding: 5px 16px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
+            padding: 6px 18px;
+            border-radius: 999px;
+            margin-bottom: 22px;
+            letter-spacing: 2px;
             font-weight: 500;
+            border: 1px solid #dde8de;
         }
 
         .hero h1 {
-            font-size: 28px;
-            font-weight: 500;
-            letter-spacing: 2px;
-            line-height: 1.4;
-            margin-bottom: 20px;
+            font-size: clamp(28px, 7vw, 40px);
+            font-weight: 600;
+            letter-spacing: 4px;
+            line-height: 1.5;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--accent-warm-deep);
+            position: relative;
+            white-space: nowrap;
+        }
+        /* 手繪底線 */
+        .hero h1 em::after {
+            content: "";
+            position: absolute;
+            left: -2%;
+            bottom: -2px;
+            width: 104%;
+            height: 8px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 10" preserveAspectRatio="none"><path d="M2 7 Q 30 2, 60 6 T 118 4" fill="none" stroke="%23d9b89a" stroke-width="3" stroke-linecap="round"/></svg>') no-repeat center / 100% 100%;
         }
 
         .hero p {
             font-size: 15px;
             color: var(--text-muted);
-            max-width: 100%;
-            margin-bottom: 35px;
-            letter-spacing: 0.5px;
-            padding: 0 10px;
+            max-width: 460px;
+            margin-bottom: 38px;
+            letter-spacing: 1px;
+            line-height: 2;
         }
 
         .btn-primary {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             background-color: var(--accent-warm);
             color: var(--white);
-            padding: 12px 40px;
-            border-radius: 4px;
+            padding: 14px 44px;
+            border-radius: 999px;
             font-weight: 500;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 12px rgba(166, 124, 101, 0.15);
+            font-size: 15px;
+            letter-spacing: 2px;
+            box-shadow: 0 6px 18px rgba(176, 122, 92, 0.3);
+            transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
+        }
+        .btn-primary:hover,
+        .btn-primary:focus-visible {
+            background-color: var(--accent-warm-deep);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(176, 122, 92, 0.35);
+        }
+        .btn-primary:active { transform: translateY(0); }
+
+        .hero-scroll-hint {
+            margin-top: 48px;
+            color: var(--text-muted);
+            font-size: 11px;
+            letter-spacing: 3px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            animation: hintBob 2.6s ease-in-out infinite;
+        }
+        @keyframes hintBob {
+            0%, 100% { transform: translateY(0); opacity: .7; }
+            50% { transform: translateY(6px); opacity: 1; }
         }
 
-        /* 區塊通用設定 */
+        /* ---------- 區塊通用 ---------- */
         .section {
-            padding: 50px 20px;
-            max-width: 100%;
+            padding: 70px 22px;
+            max-width: 640px;
+            margin: 0 auto;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 35px;
+            margin-bottom: 40px;
+        }
+
+        .section-eyebrow {
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: var(--accent-warm);
+            font-weight: 600;
+            margin-bottom: 10px;
         }
 
         .section-header h2 {
-            font-size: 22px;
-            font-weight: 500;
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-            position: relative;
-            display: inline-block;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 3px;
         }
 
-        .section-header h2::after {
-            content: "";
-            display: block;
-            width: 30px;
-            height: 1.5px;
-            background-color: var(--accent-warm);
-            margin: 8px auto 0 auto;
+        /* 腳印分隔線 */
+        .paw-divider {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 14px;
+            color: #d8c4b0;
         }
 
-        /* 常態全包方案區 */
+        /* ---------- 常態全包方案 ---------- */
+        .package-wrap {
+            background-color: var(--bg-deep);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
         .package-box {
             background-color: var(--white);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: var(--radius);
             overflow: hidden;
+            box-shadow: var(--shadow-soft);
         }
 
         .package-banner {
-            background-color: var(--accent-warm-light);
-            padding: 15px 20px;
+            background: linear-gradient(135deg, var(--accent-warm-light) 0%, #f9f1e9 100%);
+            padding: 18px 22px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -167,43 +299,54 @@
         }
 
         .package-tag {
-            color: var(--accent-warm);
+            color: var(--accent-warm-deep);
             font-size: 13px;
             font-weight: 600;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
 
         .package-price {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--accent-warm);
+            font-family: var(--serif);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-warm-deep);
+        }
+        .package-price small {
+            font-size: 13px;
+            font-weight: 500;
+            margin-right: 2px;
         }
 
-        .package-body {
-            padding: 24px 20px;
-        }
+        .package-body { padding: 26px 22px; }
 
         .package-title {
-            font-size: 18px;
-            font-weight: 500;
-            margin-bottom: 15px;
-            letter-spacing: 0.5px;
+            font-size: 19px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
         }
 
         .package-highlights {
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
             gap: 8px;
-            margin-bottom: 25px;
+            margin-bottom: 24px;
         }
 
         .highlight-tag {
-            background-color: #f5f5f5;
-            padding: 6px 12px;
-            border-radius: 4px;
+            background-color: #f6f2ec;
+            padding: 7px 14px;
+            border-radius: 999px;
             font-size: 13px;
             color: var(--text-main);
-            width: fit-content;
+            border: 1px solid var(--border-color);
+        }
+
+        .highlight-tag.green {
+            background-color: var(--accent-green-light);
+            color: var(--accent-green);
+            font-weight: 500;
+            border-color: #dde8de;
         }
 
         .package-details-list {
@@ -213,162 +356,249 @@
         }
 
         .package-details-list li {
-            margin-bottom: 12px;
-            padding-left: 20px;
+            margin-bottom: 14px;
+            padding-left: 26px;
             position: relative;
             text-align: justify;
         }
+        .package-details-list li:last-child { margin-bottom: 0; }
 
         .package-details-list li::before {
-            content: "✓";
+            content: "";
             position: absolute;
             left: 0;
-            color: var(--accent-warm);
-            font-weight: bold;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23b07a5c"><ellipse cx="12" cy="15" rx="5" ry="4.2"/><circle cx="6" cy="9.5" r="2.2"/><circle cx="10.2" cy="6.6" r="2.2"/><circle cx="13.8" cy="6.6" r="2.2"/><circle cx="18" cy="9.5" r="2.2"/></svg>') no-repeat center / contain;
         }
 
-        /* 毛小孩手繪加購方案卡片排版 */
+        .donation-note {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-align: justify;
+            margin: 22px auto 0 auto;
+            line-height: 1.8;
+            padding: 16px 18px;
+            background-color: var(--accent-green-light);
+            border: 1px dashed #c5d6c7;
+            border-radius: 10px;
+        }
+        .donation-note strong { color: var(--accent-green); }
+
+        /* ---------- 手繪加購方案 ---------- */
         .art-container {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 18px;
         }
 
         .art-card {
             background-color: var(--white);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
+            border-radius: var(--radius);
+            padding: 24px 22px;
+            position: relative;
+            box-shadow: var(--shadow-soft);
+            transition: transform .3s ease, box-shadow .3s ease;
+        }
+        .art-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lift);
+        }
+
+        /* 卡片左側暖色書背 */
+        .art-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 18px;
+            bottom: 18px;
+            width: 3px;
+            border-radius: 3px;
+            background: linear-gradient(to bottom, var(--accent-warm), #d9b89a);
+        }
+        .art-card.oil::before {
+            background: linear-gradient(to bottom, var(--accent-green), #a8bfa9);
         }
 
         .art-author {
             font-size: 11px;
             color: var(--accent-warm);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
             font-weight: 600;
         }
+        .art-card.oil .art-author { color: var(--accent-green); }
 
         .art-title {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 6px;
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
         }
 
         .art-price-tag {
-            font-size: 15px;
+            display: inline-block;
+            font-size: 14px;
             font-weight: 600;
             margin-bottom: 12px;
-            color: var(--accent-warm);
+            color: var(--accent-warm-deep);
+            background-color: var(--accent-warm-light);
+            padding: 3px 12px;
+            border-radius: 999px;
+        }
+        .art-card.oil .art-price-tag {
+            color: var(--accent-green);
+            background-color: var(--accent-green-light);
         }
 
         .art-desc {
-            font-size: 13px;
+            font-size: 13.5px;
             color: var(--text-muted);
-            line-height: 1.5;
+            line-height: 1.9;
             text-align: justify;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .art-meta {
-            font-size: 12px;
+            font-size: 12.5px;
             color: var(--text-main);
             border-top: 1px dashed var(--border-color);
             padding-top: 12px;
         }
+        .art-meta strong { color: var(--accent-warm-deep); }
 
-        /* 車馬費直列式佈局 */
+        /* ---------- 車馬規範 ---------- */
         .map-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .map-card {
             border: 1px solid var(--border-color);
-            padding: 16px;
-            border-radius: 6px;
+            padding: 16px 20px;
+            border-radius: 12px;
             background-color: var(--white);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 14px;
+            transition: border-color .25s ease, background-color .25s ease;
+        }
+        .map-card:hover {
+            border-color: #d9c2ad;
+            background-color: #fffcf8;
         }
 
         .map-card h4 {
+            font-family: var(--sans);
             font-size: 14px;
             font-weight: 500;
+            letter-spacing: .5px;
         }
 
         .map-card p {
             font-size: 14px;
-            font-weight: 600;
-            color: var(--text-main);
+            font-weight: 700;
+            color: var(--accent-warm-deep);
+            white-space: nowrap;
+        }
+        .map-card.free p { color: var(--accent-green); }
+
+        /* ---------- 預約表單 ---------- */
+        .booking-section {
+            background:
+                radial-gradient(ellipse 80% 40% at 50% 0%, #efe3d1 0%, rgba(239,227,209,0) 70%),
+                var(--bg-deep);
+            padding: 70px 16px 80px 16px;
+            border-top: 1px solid var(--border-color);
         }
 
-        /* 預約表單 */
-        .booking-section {
-            background-color: #f5efe6;
-            padding: 60px 15px;
+        .booking-inner {
+            max-width: 640px;
+            margin: 0 auto;
         }
 
         .form-container {
             background-color: var(--white);
-            padding: 30px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            padding: 34px 24px;
+            border-radius: 18px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-color);
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+        .form-group { margin-bottom: 24px; }
 
-        .form-group label {
+        .form-group > label {
             display: block;
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 6px;
+            font-size: 13.5px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
         }
 
-        .form-group label span {
-            color: #d9534f;
-            margin-left: 2px;
+        .form-group > label span {
+            color: #c0604f;
+            margin-left: 3px;
         }
 
         .form-control {
             width: 100%;
-            padding: 12px;
+            padding: 13px 14px;
             border: 1px solid var(--border-color);
             background-color: var(--bg-color);
-            border-radius: 4px;
+            border-radius: 10px;
             font-size: 14px;
+            font-family: var(--sans);
             color: var(--text-main);
             -webkit-appearance: none;
+            transition: border-color .25s ease, background-color .25s ease, box-shadow .25s ease;
         }
+
+        .form-control::placeholder { color: #b8aa9b; }
 
         .form-control:focus {
             outline: none;
             border-color: var(--accent-warm);
             background-color: var(--white);
+            box-shadow: 0 0 0 3px rgba(176, 122, 92, 0.12);
         }
 
-        textarea.form-control {
-            height: 90px;
+        select.form-control {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path d="M1 1.5 L6 6.5 L11 1.5" fill="none" stroke="%238a7d70" stroke-width="1.6" stroke-linecap="round"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 38px;
         }
+
+        textarea.form-control { height: 96px; resize: vertical; }
 
         .option-box {
             display: block;
             border: 1px solid var(--border-color);
-            padding: 14px;
-            border-radius: 6px;
+            padding: 15px 16px;
+            border-radius: 12px;
             margin-bottom: 10px;
             cursor: pointer;
             background-color: var(--white);
+            transition: border-color .25s ease, background-color .25s ease, box-shadow .25s ease;
+        }
+        .option-box:hover { border-color: #d9c2ad; }
+        .option-box:has(input:checked) {
+            border-color: var(--accent-warm);
+            background-color: var(--accent-warm-light);
+            box-shadow: 0 0 0 3px rgba(176, 122, 92, 0.1);
+        }
+        .option-box:has(input:focus-visible) {
+            box-shadow: 0 0 0 3px rgba(176, 122, 92, 0.25);
         }
 
         .option-box input {
-            margin-right: 8px;
-            transform: scale(1.1);
+            margin-right: 9px;
+            transform: scale(1.15);
+            accent-color: var(--accent-warm-deep);
         }
 
         .option-title {
@@ -377,11 +607,11 @@
         }
 
         .option-desc {
-            font-size: 12px;
+            font-size: 12.5px;
             color: var(--text-muted);
-            margin-left: 22px;
-            line-height: 1.4;
-            margin-top: 4px;
+            margin-left: 24px;
+            line-height: 1.7;
+            margin-top: 5px;
         }
 
         .btn-submit {
@@ -389,139 +619,207 @@
             background-color: var(--text-main);
             color: var(--white);
             border: none;
-            padding: 14px;
+            padding: 16px;
             font-size: 15px;
             font-weight: 500;
-            letter-spacing: 1px;
-            border-radius: 4px;
+            font-family: var(--sans);
+            letter-spacing: 3px;
+            border-radius: 999px;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 14px;
+            transition: background-color .25s ease, transform .2s ease, box-shadow .25s ease;
         }
-
+        .btn-submit:hover,
+        .btn-submit:focus-visible {
+            background-color: var(--accent-warm-deep);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(150, 96, 63, 0.3);
+        }
         .btn-submit:active {
             background-color: var(--accent-warm);
+            transform: translateY(0);
         }
 
         .form-instructions {
-            font-size: 12px;
+            font-size: 12.5px;
             color: var(--text-muted);
             text-align: center;
-            margin-top: 15px;
-            line-height: 1.6;
+            margin-top: 18px;
+            line-height: 1.9;
         }
 
+        /* ---------- 頁尾 ---------- */
         footer {
-            background-color: var(--text-main);
-            color: #999999;
+            background-color: #322a24;
+            color: #a89a8c;
             text-align: center;
-            padding: 30px 20px;
+            padding: 40px 20px;
             font-size: 12px;
-            border-top: 1px solid #333333;
+            letter-spacing: 1px;
+        }
+        footer .footer-cat {
+            margin-bottom: 14px;
+            opacity: .7;
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">H.H studio<span>到府貓咪寫真</span></div>
+        <div class="logo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--accent-warm)" aria-hidden="true">
+                <ellipse cx="12" cy="15.5" rx="5.2" ry="4.4"/>
+                <circle cx="5.8" cy="9.8" r="2.3"/>
+                <circle cx="10.1" cy="6.8" r="2.3"/>
+                <circle cx="13.9" cy="6.8" r="2.3"/>
+                <circle cx="18.2" cy="9.8" r="2.3"/>
+            </svg>
+            H.H studio<span>到府貓咪寫真</span>
+        </div>
     </nav>
 
     <section class="hero">
-        <div class="hero-badge">同時幫浪浪買一份溫飽</div>
-        <h1>留下與貓貓的無價回憶</h1>
-        <p>
-            我們是以幫助流浪貓與中途咖啡廳為核心的貓咪寫真<br>
-            寫真的收益會有一部分作為幫助貓咪中途永續經營<br>
-            因為我們深信，每一次定格都是永恆的時光膠囊，也是一份善的永續循環。
+        <!-- 漂浮腳印氛圍 -->
+        <svg class="paw-float" width="26" height="26" viewBox="0 0 24 24" fill="#dcc6ae" aria-hidden="true"><ellipse cx="12" cy="15.5" rx="5.2" ry="4.4"/><circle cx="5.8" cy="9.8" r="2.3"/><circle cx="10.1" cy="6.8" r="2.3"/><circle cx="13.9" cy="6.8" r="2.3"/><circle cx="18.2" cy="9.8" r="2.3"/></svg>
+        <svg class="paw-float" width="20" height="20" viewBox="0 0 24 24" fill="#cfdcd0" aria-hidden="true"><ellipse cx="12" cy="15.5" rx="5.2" ry="4.4"/><circle cx="5.8" cy="9.8" r="2.3"/><circle cx="10.1" cy="6.8" r="2.3"/><circle cx="13.9" cy="6.8" r="2.3"/><circle cx="18.2" cy="9.8" r="2.3"/></svg>
+        <svg class="paw-float" width="22" height="22" viewBox="0 0 24 24" fill="#e3d2bd" aria-hidden="true"><ellipse cx="12" cy="15.5" rx="5.2" ry="4.4"/><circle cx="5.8" cy="9.8" r="2.3"/><circle cx="10.1" cy="6.8" r="2.3"/><circle cx="13.9" cy="6.8" r="2.3"/><circle cx="18.2" cy="9.8" r="2.3"/></svg>
+
+        <!-- 手繪風窩著的貓 -->
+        <div class="hero-cat reveal" aria-hidden="true">
+            <svg width="120" height="84" viewBox="0 0 120 84" fill="none">
+                <!-- 身體 -->
+                <path d="M22 64 C 18 44, 34 28, 58 28 C 84 28, 98 42, 96 58 C 95 68, 84 72, 60 72 C 38 72, 25 71, 22 64 Z" stroke="#96603f" stroke-width="2.4" stroke-linecap="round" fill="#f6ede4"/>
+                <!-- 耳朵 -->
+                <path d="M44 31 L 40 18 L 52 26" stroke="#96603f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="#f6ede4"/>
+                <path d="M62 26 L 68 15 L 74 28" stroke="#96603f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="#f6ede4"/>
+                <!-- 尾巴(輕輕擺動) -->
+                <path class="tail" d="M94 60 C 108 58, 112 46, 104 38" stroke="#96603f" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+                <!-- 閉眼睡顏 -->
+                <path d="M48 44 Q 52 48, 56 44" stroke="#96603f" stroke-width="2" stroke-linecap="round" fill="none"/>
+                <path d="M64 44 Q 68 48, 72 44" stroke="#96603f" stroke-width="2" stroke-linecap="round" fill="none"/>
+                <!-- 鼻子與嘴 -->
+                <path d="M59 51 Q 60 53, 61 51" stroke="#96603f" stroke-width="2" stroke-linecap="round" fill="none"/>
+                <!-- 鬍鬚 -->
+                <path d="M40 50 L 30 48 M40 54 L 31 55" stroke="#c9a587" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M80 50 L 90 48 M80 54 L 89 55" stroke="#c9a587" stroke-width="1.6" stroke-linecap="round"/>
+                <!-- 小愛心 -->
+                <path d="M102 22 C 100 18, 94 19, 95 24 C 95.6 27, 100 30, 101 31 C 102 30, 106.4 27, 107 24 C 108 19, 104 18, 102 22 Z" fill="#d98e6f"/>
+            </svg>
+        </div>
+
+        <div class="hero-badge reveal">同時幫浪浪買一份溫飽</div>
+        <h1 class="reveal">留下與貓貓的<br><em>無價回憶</em></h1>
+        <p class="reveal">
+            我們是以幫助流浪貓與中途咖啡廳為核心的貓咪寫真，寫真的收益會有一部分作為幫助貓咪中途永續經營。因為我們深信，每一次定格都是永恆的時光膠囊，也是一份善的永續循環。
         </p>
-        <a href="#booking" class="btn-primary">線上預約申請</a>
+        <a href="#booking" class="btn-primary reveal">
+            線上預約申請
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><ellipse cx="12" cy="15.5" rx="5.2" ry="4.4"/><circle cx="5.8" cy="9.8" r="2.3"/><circle cx="10.1" cy="6.8" r="2.3"/><circle cx="13.9" cy="6.8" r="2.3"/><circle cx="18.2" cy="9.8" r="2.3"/></svg>
+        </a>
+        <div class="hero-scroll-hint" aria-hidden="true">
+            往下了解方案
+            <svg width="12" height="8" viewBox="0 0 12 8"><path d="M1 1.5 L6 6.5 L11 1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
     </section>
 
-    <section id="package" class="section" style="background-color: #fdfcfb; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
-        <div class="section-header">
-            <h2>常態全包方案</h2>
-        </div>
-        <div class="package-box">
-            <div class="package-banner">
-                <span class="package-tag">全包方案內容</span>
-                <span class="package-price">NT$ 8,999</span>
-            </div>
-            <div class="package-body">
-                <h3 class="package-title">【H.H studio・到府寫真】</h3>
-                <div class="package-highlights">
-                    <div class="highlight-tag">服務時間：2~3小時</div>
-                    <div class="highlight-tag">多貓家庭不加價（免費）</div>
-                    <div class="highlight-tag" style="background-color: var(--accent-green-light); color: var(--accent-green); font-weight: 500;">固定把1000捐贈給中途機構</div>
+    <div id="package" class="package-wrap">
+        <section class="section">
+            <div class="section-header reveal">
+                <div class="section-eyebrow">PHOTO SESSION</div>
+                <h2>常態全包方案</h2>
+                <div class="paw-divider" aria-hidden="true">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="15.5" rx="5.2" ry="4.4"/><circle cx="5.8" cy="9.8" r="2.3"/><circle cx="10.1" cy="6.8" r="2.3"/><circle cx="13.9" cy="6.8" r="2.3"/><circle cx="18.2" cy="9.8" r="2.3"/></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="transform: rotate(15deg)"><ellipse cx="12" cy="15.5" rx="5.2" ry="4.4"/><circle cx="5.8" cy="9.8" r="2.3"/><circle cx="10.1" cy="6.8" r="2.3"/><circle cx="13.9" cy="6.8" r="2.3"/><circle cx="18.2" cy="9.8" r="2.3"/></svg>
                 </div>
-                <ul class="package-details-list">
-                    <li>多貓家庭完全不設限：不管家裡有幾位主子，我們通通免費、不加價。</li>
-                    <li>交付豐富檔案：調光調色風格照片 40 張以上 。</li>
-                    <li>精緻回憶基礎實體組：包含特製手作貓咪實體相框 1 個 ＋ 佳能CP1500相片 3 張。</li>
-                    <li>現場貓掌拓印儀式：提供專屬拓印章與拓印紙，包含現場拓印側拍錄影側拍短片。</li>
-                    <li>安心加碼安全保障：多貓家庭若需追加第二份實體拓印，每隻僅加收 $500。</li>
-                </ul>
             </div>
-        </div>
-        <p style="font-size: 12px; color: var(--text-muted); text-align: justify; margin: 20px auto 0 auto; line-height: 1.5; padding: 0 10px;">
-            💡 <strong>浪愛永續承諾</strong>：本場拍攝費用中，將有固定的 $1,000 元現金捐贈給合作的流浪貓咪中途之家，用於支持他們的永續經營。
-        </p>
-    </section>
+            <div class="package-box reveal">
+                <div class="package-banner">
+                    <span class="package-tag">全包方案內容</span>
+                    <span class="package-price"><small>NT$</small>8,999</span>
+                </div>
+                <div class="package-body">
+                    <h3 class="package-title">【H.H studio・到府寫真】</h3>
+                    <div class="package-highlights">
+                        <div class="highlight-tag">服務時間：2~3小時</div>
+                        <div class="highlight-tag">多貓家庭不加價（免費）</div>
+                        <div class="highlight-tag green">固定把1000捐贈給中途機構</div>
+                    </div>
+                    <ul class="package-details-list">
+                        <li>多貓家庭完全不設限：不管家裡有幾位主子，我們通通免費、不加價。</li>
+                        <li>交付豐富檔案：調光調色風格照片 40 張以上。</li>
+                        <li>精緻回憶基礎實體組：包含特製手作貓咪實體相框 1 個 ＋ 佳能CP1500相片 3 張。</li>
+                        <li>現場貓掌拓印儀式：提供專屬拓印章與拓印紙，包含現場拓印側拍錄影側拍短片。</li>
+                        <li>安心加碼安全保障：多貓家庭若需追加第二份實體拓印，每隻僅加收 $500。</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="donation-note reveal">
+                💡 <strong>浪愛永續承諾</strong>：本場拍攝費用中，將有固定的 $1,000 元現金捐贈給合作的流浪貓咪中途之家，用於支持他們的永續經營。
+            </p>
+        </section>
+    </div>
 
     <section id="art" class="section">
-        <div class="section-header">
+        <div class="section-header reveal">
+            <div class="section-eyebrow">HAND-DRAWN</div>
             <h2>毛小孩手繪加購方案</h2>
+            <div class="paw-divider" aria-hidden="true">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="15.5" rx="5.2" ry="4.4"/><circle cx="5.8" cy="9.8" r="2.3"/><circle cx="10.1" cy="6.8" r="2.3"/><circle cx="13.9" cy="6.8" r="2.3"/><circle cx="18.2" cy="9.8" r="2.3"/></svg>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="transform: rotate(15deg)"><ellipse cx="12" cy="15.5" rx="5.2" ry="4.4"/><circle cx="5.8" cy="9.8" r="2.3"/><circle cx="10.1" cy="6.8" r="2.3"/><circle cx="13.9" cy="6.8" r="2.3"/><circle cx="18.2" cy="9.8" r="2.3"/></svg>
+            </div>
         </div>
         <div class="art-container">
-            <div class="art-card">
+            <div class="art-card reveal">
                 <div class="art-author">手繪系列 (交期1週)</div>
                 <h3 class="art-title">初階回憶・手繪明信片</h3>
                 <div class="art-price-tag">加購價 +$1,999</div>
                 <p class="art-desc">一週快速到貨。明信片小尺寸（10*15cm），完美保留純手繪特有的溫暖線條筆觸與毛孩神韻。</p>
                 <div class="art-meta">多貓家庭：預設含1貓。每多一隻主子/人類入鏡另加 <strong>+$300</strong></div>
             </div>
-            <div class="art-card">
-                <div class="art-info">
-                    <div class="art-author">手繪系列 (交期1週)</div>
-                    <h3 class="art-title">進階桌上・手繪肖像畫</h3>
-                    <div class="art-price-tag">加購價 +$2,999</div>
-                    <p class="art-desc">黃金比例桌上型精緻擺飾（15*20cm），純手工細緻細摹，適合擺放於辦公桌、客廳玄關或床頭櫃。</p>
-                    <div class="art-meta">多貓家庭：預設含1貓。每多一隻主子/人類入鏡另加 <strong>+$600</strong></div>
-                </div>
+            <div class="art-card reveal">
+                <div class="art-author">手繪系列 (交期1週)</div>
+                <h3 class="art-title">進階桌上・手繪肖像畫</h3>
+                <div class="art-price-tag">加購價 +$2,999</div>
+                <p class="art-desc">黃金比例桌上型精緻擺飾（15*20cm），純手工細緻細摹，適合擺放於辦公桌、客廳玄關或床頭櫃。</p>
+                <div class="art-meta">多貓家庭：預設含1貓。每多一隻主子/人類入鏡另加 <strong>+$600</strong></div>
             </div>
-            <div class="art-card">
-                <div class="art-info">
-                    <div class="art-author">擬真油畫系列 (交期1個月)</div>
-                    <h3 class="art-title">傳家珍藏・手繪擬真油畫</h3>
-                    <div class="art-price-tag">加購價 +$6,999</div>
-                    <p class="art-desc">大氣客廳壁掛畫5F布面畫布（35*27cm）。專業畫師以厚重高階油彩層層堆疊立體毛髮，永久留存最深邃的眼神靈魂。</p>
-                    <div class="art-meta">多貓家庭：預設含1貓。每多一隻主子/人類入鏡另加 <strong>+$4,800</strong></div>
-                </div>
+            <div class="art-card oil reveal">
+                <div class="art-author">擬真油畫系列 (交期1個月)</div>
+                <h3 class="art-title">傳家珍藏・手繪擬真油畫</h3>
+                <div class="art-price-tag">加購價 +$6,999</div>
+                <p class="art-desc">大氣客廳壁掛畫5F布面畫布（35*27cm）。專業畫師以厚重高階油彩層層堆疊立體毛髮，永久留存最深邃的眼神靈魂。</p>
+                <div class="art-meta">多貓家庭：預設含1貓。每多一隻主子/人類入鏡另加 <strong>+$4,800</strong></div>
             </div>
         </div>
     </section>
 
     <section id="travel" class="section" style="border-top: 1px solid var(--border-color);">
-        <div class="section-header">
+        <div class="section-header reveal">
+            <div class="section-eyebrow">TRAVEL FEE</div>
             <h2>全包制地區車馬規範</h2>
+            <div class="paw-divider" aria-hidden="true">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="15.5" rx="5.2" ry="4.4"/><circle cx="5.8" cy="9.8" r="2.3"/><circle cx="10.1" cy="6.8" r="2.3"/><circle cx="13.9" cy="6.8" r="2.3"/><circle cx="18.2" cy="9.8" r="2.3"/></svg>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="transform: rotate(15deg)"><ellipse cx="12" cy="15.5" rx="5.2" ry="4.4"/><circle cx="5.8" cy="9.8" r="2.3"/><circle cx="10.1" cy="6.8" r="2.3"/><circle cx="13.9" cy="6.8" r="2.3"/><circle cx="18.2" cy="9.8" r="2.3"/></svg>
+            </div>
         </div>
         <div class="map-container">
-            <div class="map-card">
+            <div class="map-card free reveal">
                 <h4>雙北都會區 (淡水、台北、新北市區)</h4>
                 <p>免車馬</p>
             </div>
-            <div class="map-card">
+            <div class="map-card reveal">
                 <h4>桃基及雙北山區 (基隆、桃園、雙北山區)</h4>
                 <p>+$500</p>
             </div>
-            <div class="map-card">
+            <div class="map-card reveal">
                 <h4>竹苗宜地區</h4>
                 <p>+$1,500</p>
             </div>
-            <div class="map-card">
+            <div class="map-card reveal">
                 <h4>中台灣都會區 (台中、彰化、南投)</h4>
                 <p>+$3,000</p>
             </div>
-            <div class="map-card">
+            <div class="map-card reveal">
                 <h4>其他全台所有地區</h4>
                 <p>+$4,500</p>
             </div>
@@ -529,105 +827,138 @@
     </section>
 
     <section id="booking" class="booking-section">
-        <div class="section-header">
-            <h2>貓咪寫真預約申請</h2>
-        </div>
-        <div class="form-container">
-            <form action="https://docs.google.com/forms/d/e/1FAIpQLScX1ZDS0a-dKIU7QjuGTheruD5JlkZxlHRG2sX1ZW3xRB6H3w/formResponse" method="POST" id="catBookingForm">
-                
-                <div class="form-group">
-                    <label>飼主稱呼 / 姓名<span>*</span></label>
-                    <input type="text" name="entry.1535175668" class="form-control" placeholder="例：林小姐" required>
+        <div class="booking-inner">
+            <div class="section-header reveal">
+                <div class="section-eyebrow">BOOKING</div>
+                <h2>貓咪寫真預約申請</h2>
+                <div class="paw-divider" aria-hidden="true">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="15.5" rx="5.2" ry="4.4"/><circle cx="5.8" cy="9.8" r="2.3"/><circle cx="10.1" cy="6.8" r="2.3"/><circle cx="13.9" cy="6.8" r="2.3"/><circle cx="18.2" cy="9.8" r="2.3"/></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="transform: rotate(15deg)"><ellipse cx="12" cy="15.5" rx="5.2" ry="4.4"/><circle cx="5.8" cy="9.8" r="2.3"/><circle cx="10.1" cy="6.8" r="2.3"/><circle cx="13.9" cy="6.8" r="2.3"/><circle cx="18.2" cy="9.8" r="2.3"/></svg>
                 </div>
+            </div>
+            <div class="form-container reveal">
+                <form action="https://docs.google.com/forms/d/e/1FAIpQLScX1ZDS0a-dKIU7QjuGTheruD5JlkZxlHRG2sX1ZW3xRB6H3w/formResponse" method="POST" id="catBookingForm">
 
-                <div class="form-group">
-                    <label>聯絡管道選擇<span>*</span></label>
-                    <select name="entry.629849893" class="form-control" required>
-                        <option value="" disabled selected>請選擇...</option>
-                        <option value="instagram聯絡">instagram聯絡</option>
-                        <option value="line聯絡">line聯絡</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>聯絡資訊 ID<span>*</span></label>
-                    <input type="text" name="entry.1907692021" class="form-control" placeholder="請填寫您的帳號或ID (請開啟陌生訊息)" required>
-                </div>
-
-                <div class="form-group">
-                    <label>貓咪基本資訊描述<span>*</span></label>
-                    <textarea name="entry.598040362" class="form-control" placeholder="例：3歲/銀虎斑/美短/哈尼；2歲/橘色/米克斯/辛巴" required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>貓咪是否怕生 (貓咪個性調查)<span>*</span></label>
-                    <select name="entry.1872494964" class="form-control" required>
-                        <option value="" disabled selected>請選擇...</option>
-                        <option value="是，面對陌生人比較緊張">是，面對陌生人比較緊張</option>
-                        <option value="否，是不怕生的小天使">否，是不怕生的小天使</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>是否為認養/中途畢業之貓咪主子？<span>*</span></label>
-                    <div class="option-box">
-                        <input type="radio" name="entry.1365937585" value="是，我是愛心領養人 ✦ 領養人免費獲得明信片畫作" checked>
-                        <span class="option-title">是，我是愛心領養人 ✦ 領養人免費獲得明信片畫作</span>
-                        <p class="option-desc">致敬愛心：憑認養證明預約本方案，即可直接免費獲得專屬手繪明信片畫作一份！</p>
+                    <div class="form-group">
+                        <label for="ownerName">飼主稱呼 / 姓名<span>*</span></label>
+                        <input type="text" id="ownerName" name="entry.1535175668" class="form-control" placeholder="例：林小姐" required>
                     </div>
-                    <div class="option-box">
-                        <input type="radio" name="entry.1365937585" value="否，一般常態貓家庭">
-                        <span class="option-title">否，一般常態貓家庭</span>
-                        <p class="option-desc">依然享有不計貓數 2~3 小時奢華到府寫真，同樣會捐贈 $1,000 支持流浪貓中途之家！</p>
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <label>毛小孩手繪加購方案意願 (自由複選)</label>
-                    <div class="option-box">
-                        <input type="checkbox" name="entry.1270357405" value="加購 A：【手繪】初階明信片 (+$1,999 / 領養人免費獲得)">
-                        <span class="option-title">加購 A：【手繪】初階明信片 (+$1,999 / 領養人免費獲得)</span>
+                    <div class="form-group">
+                        <label for="contactChannel">聯絡管道選擇<span>*</span></label>
+                        <select id="contactChannel" name="entry.629849893" class="form-control" required>
+                            <option value="" disabled selected>請選擇...</option>
+                            <option value="instagram聯絡">instagram聯絡</option>
+                            <option value="line聯絡">line聯絡</option>
+                        </select>
                     </div>
-                    <div class="option-box">
-                        <input type="checkbox" name="entry.1270357405" value="加購 B：【手繪】進階桌上肖像畫 (+$2,999)">
-                        <span class="option-title">加購 B：【手繪】進階桌上肖像畫 (+$2,999)</span>
+
+                    <div class="form-group">
+                        <label for="contactId">聯絡資訊 ID<span>*</span></label>
+                        <input type="text" id="contactId" name="entry.1907692021" class="form-control" placeholder="請填寫您的帳號或ID (請開啟陌生訊息)" required>
                     </div>
-                    <div class="option-box">
-                        <input type="checkbox" name="entry.1270357405" value="加購 C：【油畫】傳家珍藏手繪擬真油畫 (+$6,999，交期1個月)">
-                        <span class="option-title">加購 C：【油畫】傳家珍藏手繪擬真油畫 (+$6,999，交期1個月)</span>
+
+                    <div class="form-group">
+                        <label for="catInfo">貓咪基本資訊描述<span>*</span></label>
+                        <textarea id="catInfo" name="entry.598040362" class="form-control" placeholder="例：3歲/銀虎斑/美短/哈尼；2歲/橘色/米克斯/辛巴" required></textarea>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label>服務區域車馬選擇<span>*</span></label>
-                    <select name="entry.1453730335" class="form-control" required>
-                        <option value="" disabled selected>請選擇地區...</option>
-                        <option value="雙北都會區">雙北市區 (台北、新北市區) ➔ 免車馬</option>
-                        <option value="桃基及雙北山區">桃基地區及雙北山區 (基隆、桃園、雙北山區) ➔ +$500</option>
-                        <option value="竹苗宜地區">竹苗宜地區 (新竹、苗栗、宜蘭) ➔ +$1,500</option>
-                        <option value="中台灣都會區">中台灣都會區 (台中、彰化、南投) ➔ +$3,000</option>
-                        <option value="其他全台所有地區">其他地區 ➔ +$4,500</option>
-                    </select>
-                </div>
+                    <div class="form-group">
+                        <label for="catShy">貓咪是否怕生 (貓咪個性調查)<span>*</span></label>
+                        <select id="catShy" name="entry.1872494964" class="form-control" required>
+                            <option value="" disabled selected>請選擇...</option>
+                            <option value="是，面對陌生人比較緊張">是，面對陌生人比較緊張</option>
+                            <option value="否，是不怕生的小天使">否，是不怕生的小天使</option>
+                        </select>
+                    </div>
 
-                <div class="form-group">
-                    <label>其他補充需求 (若有其他貓咪個性可在此備註)</label>
-                    <textarea name="entry.1217364157" class="form-control" placeholder="請描述家中的採光環境，或填寫多貓多人群合照等特殊需求。"></textarea>
-                </div>
+                    <div class="form-group">
+                        <label>是否為認養/中途畢業之貓咪主子？<span>*</span></label>
+                        <label class="option-box">
+                            <input type="radio" name="entry.1365937585" value="是，我是愛心領養人 ✦ 領養人免費獲得明信片畫作" checked>
+                            <span class="option-title">是，我是愛心領養人 ✦ 領養人免費獲得明信片畫作</span>
+                            <p class="option-desc">致敬愛心：憑認養證明預約本方案，即可直接免費獲得專屬手繪明信片畫作一份！</p>
+                        </label>
+                        <label class="option-box">
+                            <input type="radio" name="entry.1365937585" value="否，一般常態貓家庭">
+                            <span class="option-title">否，一般常態貓家庭</span>
+                            <p class="option-desc">依然享有不計貓數 2~3 小時奢華到府寫真，同樣會捐贈 $1,000 支持流浪貓中途之家！</p>
+                        </label>
+                    </div>
 
-                <button type="submit" class="btn-submit">送出預約申請</button>
-                <p class="form-instructions">
-                    點擊送出後，表單將寫入後端 Google Forms 數據庫。<br>
-                    我們團隊會一邊擼貓一邊查看您的訊息，將於 5 個工作天內主動與您聯絡，期待見到您們家的寶貝！
-                </p>
-            </form>
+                    <div class="form-group">
+                        <label>毛小孩手繪加購方案意願 (自由複選)</label>
+                        <label class="option-box">
+                            <input type="checkbox" name="entry.1270357405" value="加購 A：【手繪】初階明信片 (+$1,999 / 領養人免費獲得)">
+                            <span class="option-title">加購 A：【手繪】初階明信片 (+$1,999 / 領養人免費獲得)</span>
+                        </label>
+                        <label class="option-box">
+                            <input type="checkbox" name="entry.1270357405" value="加購 B：【手繪】進階桌上肖像畫 (+$2,999)">
+                            <span class="option-title">加購 B：【手繪】進階桌上肖像畫 (+$2,999)</span>
+                        </label>
+                        <label class="option-box">
+                            <input type="checkbox" name="entry.1270357405" value="加購 C：【油畫】傳家珍藏手繪擬真油畫 (+$6,999，交期1個月)">
+                            <span class="option-title">加購 C：【油畫】傳家珍藏手繪擬真油畫 (+$6,999，交期1個月)</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="travelArea">服務區域車馬選擇<span>*</span></label>
+                        <select id="travelArea" name="entry.1453730335" class="form-control" required>
+                            <option value="" disabled selected>請選擇地區...</option>
+                            <option value="雙北都會區">雙北市區 (台北、新北市區) ➔ 免車馬</option>
+                            <option value="桃基及雙北山區">桃基地區及雙北山區 (基隆、桃園、雙北山區) ➔ +$500</option>
+                            <option value="竹苗宜地區">竹苗宜地區 (新竹、苗栗、宜蘭) ➔ +$1,500</option>
+                            <option value="中台灣都會區">中台灣都會區 (台中、彰化、南投) ➔ +$3,000</option>
+                            <option value="其他全台所有地區">其他地區 ➔ +$4,500</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="extraNotes">其他補充需求 (若有其他貓咪個性可在此備註)</label>
+                        <textarea id="extraNotes" name="entry.1217364157" class="form-control" placeholder="請描述家中的採光環境，或填寫多貓多人群合照等特殊需求。"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">送出預約申請</button>
+                    <p class="form-instructions">
+                        點擊送出後，表單將寫入後端 Google Forms 數據庫。<br>
+                        我們團隊會一邊擼貓一邊查看您的訊息，將於 5 個工作天內主動與您聯絡，期待見到您們家的寶貝！
+                    </p>
+                </form>
+            </div>
         </div>
     </section>
 
     <footer>
-
+        <div class="footer-cat" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#a89a8c"><ellipse cx="12" cy="15.5" rx="5.2" ry="4.4"/><circle cx="5.8" cy="9.8" r="2.3"/><circle cx="10.1" cy="6.8" r="2.3"/><circle cx="13.9" cy="6.8" r="2.3"/><circle cx="18.2" cy="9.8" r="2.3"/></svg>
+        </div>
         <p>&copy; 2026 H.H studio 到府貓咪寫真工作室. All Rights Reserved.</p>
     </footer>
+
+    <script>
+        // 捲動進場動畫(IntersectionObserver,輕量無套件)
+        (function () {
+            var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var items = document.querySelectorAll('.reveal');
+            if (reduceMotion || !('IntersectionObserver' in window)) {
+                items.forEach(function (el) { el.classList.add('is-visible'); });
+                return;
+            }
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+            items.forEach(function (el, i) {
+                el.style.transitionDelay = Math.min(i % 4, 3) * 0.08 + 's';
+                observer.observe(el);
+            });
+        })();
+    </script>
 
 </body>
 </html>
