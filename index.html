@@ -146,13 +146,20 @@
         .hero-cat {
             margin-bottom: 26px;
         }
-        .hero-cat svg .tail {
-            transform-origin: 86px 70px;
-            animation: tailSway 5s ease-in-out infinite;
+        .hero-cat svg { overflow: visible; }  /* 讓愛心飄出畫布範圍也看得見 */
+        /* 尾巴改用 SVG 內建 animateTransform(見下方 SVG),跨瀏覽器最穩定 */
+
+        /* 愛心:往上飄、漸漸消失,停一拍後從原位重新出現 → 無限循環 */
+        .hero-cat svg .heart {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: heartFloat 3.6s ease-out infinite;
         }
-        @keyframes tailSway {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(7deg); }
+        @keyframes heartFloat {
+            0%   { opacity: 0; transform: translateY(6px) scale(.6); }
+            12%  { opacity: 1; transform: translateY(0)   scale(1); }   /* 浮現 */
+            70%  { opacity: 0; transform: translateY(-24px) scale(.95); } /* 飄升淡出 */
+            100% { opacity: 0; transform: translateY(-24px) scale(.95); } /* 停一拍再循環 */
         }
 
         .hero-badge {
@@ -687,13 +694,25 @@
         <!-- 手繪風窩著的貓 -->
         <div class="hero-cat reveal" aria-hidden="true">
             <svg width="120" height="84" viewBox="0 0 120 84" fill="none">
-                <!-- 身體 -->
-                <path d="M22 64 C 18 44, 34 28, 58 28 C 84 28, 98 42, 96 58 C 95 68, 84 72, 60 72 C 38 72, 25 71, 22 64 Z" stroke="#96603f" stroke-width="2.4" stroke-linecap="round" fill="#f6ede4"/>
-                <!-- 耳朵 -->
-                <path d="M44 31 L 40 18 L 52 26" stroke="#96603f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="#f6ede4"/>
-                <path d="M62 26 L 68 15 L 74 28" stroke="#96603f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="#f6ede4"/>
-                <!-- 尾巴(輕輕擺動) -->
-                <path class="tail" d="M94 60 C 108 58, 112 46, 104 38" stroke="#96603f" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+                <!-- 尾巴:畫在身體「後面」,根部藏進身體,線條從輪廓自然伸出(輕輕擺動) -->
+                <path class="tail" d="M92 62 C 108 59, 113 46, 104 38" stroke="#96603f" stroke-width="2.4" stroke-linecap="round" fill="none">
+                    <animateTransform attributeName="transform" type="rotate"
+                        values="-3 92 62; 8 92 62; -3 92 62"
+                        dur="3.2s" repeatCount="indefinite"
+                        calcMode="spline" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+                </path>
+                <!-- 身體+耳朵:單一連續輪廓,線條完全相連 -->
+                <path d="M22 64
+                         C 18 48, 27 39, 40 32
+                         Q 36 23, 37 16
+                         Q 45 19, 53 28
+                         C 56 27, 59 27, 62 27
+                         Q 64 18, 69 13
+                         Q 75 21, 78 31
+                         C 89 37, 97 47, 96 58
+                         C 95 68, 84 72, 60 72
+                         C 38 72, 25 71, 22 64 Z"
+                      stroke="#96603f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="#f6ede4"/>
                 <!-- 閉眼睡顏 -->
                 <path d="M48 44 Q 52 48, 56 44" stroke="#96603f" stroke-width="2" stroke-linecap="round" fill="none"/>
                 <path d="M64 44 Q 68 48, 72 44" stroke="#96603f" stroke-width="2" stroke-linecap="round" fill="none"/>
@@ -703,7 +722,7 @@
                 <path d="M40 50 L 30 48 M40 54 L 31 55" stroke="#c9a587" stroke-width="1.6" stroke-linecap="round"/>
                 <path d="M80 50 L 90 48 M80 54 L 89 55" stroke="#c9a587" stroke-width="1.6" stroke-linecap="round"/>
                 <!-- 小愛心 -->
-                <path d="M102 22 C 100 18, 94 19, 95 24 C 95.6 27, 100 30, 101 31 C 102 30, 106.4 27, 107 24 C 108 19, 104 18, 102 22 Z" fill="#d98e6f"/>
+                <path class="heart" d="M102 22 C 100 18, 94 19, 95 24 C 95.6 27, 100 30, 101 31 C 102 30, 106.4 27, 107 24 C 108 19, 104 18, 102 22 Z" fill="#d98e6f"/>
             </svg>
         </div>
 
@@ -940,6 +959,10 @@
         // 捲動進場動畫(IntersectionObserver,輕量無套件)
         (function () {
             var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reduceMotion) {
+                // SVG 內建動畫不受 CSS 控制,需手動移除
+                document.querySelectorAll('animateTransform').forEach(function (a) { a.remove(); });
+            }
             var items = document.querySelectorAll('.reveal');
             if (reduceMotion || !('IntersectionObserver' in window)) {
                 items.forEach(function (el) { el.classList.add('is-visible'); });
